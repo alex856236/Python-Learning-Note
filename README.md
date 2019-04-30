@@ -1,6 +1,8 @@
 # Python技術手冊筆記
 
-#### Docstrings
+### Docstrings
+
+用來描述函式\(類別、模組\)
 
 當在函式\(類別、模組\)中第一個述句為字串時，該字串為docstring屬性
 
