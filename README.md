@@ -1,8 +1,8 @@
 # Python技術手冊筆記
 
-### 嗨
+## 嗨
 
-### Docstrings
+## Docstrings
 
 用來描述函式\(類別、模組\)
 
