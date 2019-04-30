@@ -1,4 +1,4 @@
 # Table of contents
 
-* [Python 技術手冊筆記](README.md)
+* [Initial page](README.md)
 
