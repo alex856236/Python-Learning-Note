@@ -79,10 +79,32 @@ print(s3) #set()
 #dict宣告
 d1 = {'a':1, 'b':2, 'c':3, 'a':4}
 d2 = dict(a=1,b=2,c=3)
-d3 = dict() #空字典, 也可單獨使用{}
+d3 = dict([('a',1),('b',2),('c',3)])
+d4 = dict() #空字典, 也可單獨使用{}
 print(d1) #{'a': 4, 'b': 2, 'c': 3}
 print(d2) #{'a': 1, 'b': 2, 'c': 3}
-print(d3) #{}
+print(d3) #{'a': 1, 'b': 2, 'c': 3}
+print(d4) #{}
+```
+
+### Boolean值
+
+任何非零或非空容器\(string、tuple、list、set、dict\)為true。0\(任何數值型別的\)、None以及空容器為false
+
+## 指定述句
+
+```text
+a = 2
+b = 3
+a = b = c = 0
+
+x = (1,2)
+a, b = x
+
+x = [1,2,3,4,5]
+first, *middle, last = x
+#上述句等同
+first, middle, last = x[0], x[1:-1], x[-1]
 ```
 
 ## Docstrings
