@@ -1,26 +1,28 @@
 # Python技術手冊筆記
 
-##  ​資料型別
+## Chapter 3
 
-Pyhon中的物件可分為可變物件\(mutable object\)及不可變物件\(immutable object\)
+###    ​資料型別
 
-### 數字
+* Pyhon中的物件可分為可變物件\(mutable object\)及不可變物件\(immutable object\)
 
-二進位表示法，以0b開頭，後續接二進位值
+###     數字
+
+* 二進位表示法，以0b開頭，後續接二進位值
 
 ```text
 b1 = 0b01 #1
 b2 = 0b110010 #50
 ```
 
-八進位表示法以，0o開頭，後續接八進位值
+* 八進位表示法以，0o開頭，後續接八進位值
 
 ```text
 o1 = 0o1 #1
 o2 = 0o27 #23
 ```
 
-十六進位表示法，0x開頭，後續接十六進位值
+* 十六進位表示法，0x開頭，後續接十六進位值
 
 ```text
 x1 = 0x1 #1
@@ -29,9 +31,8 @@ x2 = 0x2CA #714
 
 ### 元組 tuple <a id="tuple"></a>
 
-tuple是由項目\(items\)所組成的不可變的有序序列，每個項目可以是不同型別。
-
-可以使用可變序列當作tuple的項目，但實務上最好不要這麼做。
+* tuple是由項目\(items\)所組成的不可變的有序序列，每個項目可以是不同型別。
+* 可以使用可變序列當作tuple的項目，但實務上最好不要這麼做。
 
 ```text
 #tuple宣告
@@ -45,7 +46,7 @@ print(t3) #()
 
 ### 串列 list 
 
-list是由項目\(items\)所組成的不可變的有序序列
+* list是由項目\(items\)所組成的不可變的有序序列
 
 ```text
 #list宣告
@@ -59,9 +60,8 @@ print(l3) #[]
 
 ### 集合 set
 
-集合有set和frozenset\(凍結集\)，frozenset是不可變的
-
-set是任意順序的唯一項目群集。項目可以是不同型別，但它們必須是可雜湊的。set的項目不可是set，但可以是frozenset
+* 集合有set和frozenset\(凍結集\)，frozenset是不可變的
+* set是任意順序的唯一項目群集。項目可以是不同型別，但它們必須是可雜湊的。set的項目不可是set，但可以是frozenset
 
 ```text
 #set宣告
@@ -89,7 +89,7 @@ print(d4) #{}
 
 ### Boolean值
 
-任何非零或非空容器\(string、tuple、list、set、dict\)為true。0\(任何數值型別的\)、None以及空容器為false
+* 任何非零或非空容器\(string、tuple、list、set、dict\)為true。0\(任何數值型別的\)、None以及空容器為false
 
 ## 指定述句
 
@@ -106,6 +106,33 @@ first, *middle, last = x
 #上述句等同
 first, middle, last = x[0], x[1:-1], x[-1]
 ```
+
+### 比較鍊串 Comparison Chaining
+
+* Python允許比較運算是串連起來，其中以含and的意思
+
+```text
+a < b <= c < d
+#等同 a<b and b<=c and c<d
+#a!=b!=c 不代表a!=c
+```
+
+### 短路運算子
+
+* and : 右邊的運算元只會在左邊的運算元皆為ture時才會被估算
+* or : 右邊的運算元只會在左邊的運算元皆為false時才會被估算
+
+```text
+x, y, z=5, 0, 2
+_and = x and y and z #估算至y就停止,並回傳y
+print(_and) #0
+_or = x or y or z #估算至x就停止,並回傳x
+print(_or) #5
+```
+
+### 三元運算子
+
+whentrue if condition else whenfalse
 
 ## Docstrings
 
