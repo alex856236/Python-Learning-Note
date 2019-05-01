@@ -20,7 +20,7 @@ o1 = 0o1 #1
 o2 = 0o27 #23
 ```
 
-十六進位表示法0x1, 0xDA5
+十六進位表示法，0x開頭，後續接十六進位值
 
 ```text
 x1 = 0x1 #1
@@ -29,7 +29,7 @@ x2 = 0x2CA #714
 
 ### 元組 tuple <a id="tuple"></a>
 
-tuple是由項目\(items\)所組成的不可變的有序序列，\\n每個項目可以是不同型別。
+tuple是由項目\(items\)所組成的不可變的有序序列，每個項目可以是不同型別。
 
 可以使用可變序列當作tuple的項目，但實務上最好不要這麼做。
 
@@ -55,6 +55,34 @@ l3 = list() #空list, 也可單獨使用[]
 print(l1) #[1,2,3]
 print(l2) #['w', 'o', 'w']
 print(l3) #[]
+```
+
+### 集合 set
+
+集合有set和frozenset\(凍結集\)，frozenset是不可變的
+
+set是任意順序的唯一項目群集。項目可以是不同型別，但它們必須是可雜湊的。set的項目不可是set，但可以是frozenset
+
+```text
+#set宣告
+s1 = {1,2,2,3}
+s2 = set('wow') #set()宣告,參數必須為可迭代的(iterable),或單一值
+s3 = set() #空set, 不可使用{},{}是空字典
+print(s1) #{1,2,3}
+print(s2) #{'w', 'o'}
+print(s3) #set()
+```
+
+### 字典 dict
+
+```text
+#dict宣告
+d1 = {'a':1, 'b':2, 'c':3, 'a':4}
+d2 = dict(a=1,b=2,c=3)
+d3 = dict() #空字典, 也可單獨使用{}
+print(d1) #{'a': 4, 'b': 2, 'c': 3}
+print(d2) #{'a': 1, 'b': 2, 'c': 3}
+print(d3) #{}
 ```
 
 ## Docstrings
