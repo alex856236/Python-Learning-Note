@@ -255,6 +255,23 @@ kwds(1,b=2,c=3)
 #{'b': 2, 'c': 3}
 ```
 
+* 僅限關鍵字\(keyword-only parameters\)
+  * 僅限python3版本
+  * 使參數必須以指定名稱方式傳入
+  * 必須出現在\*args之後，\*\*kwds之前
+
+```text
+def f(a, *, b, c=56): #b為僅限關鍵字
+    return a, b, c
+f(12, b=34) #(12, 34, 56)
+f(12) #TypeError
+#missing 1 required keyword-only argument: 'b'
+
+def g(x, *a, b=23, **k): #b為僅限關鍵字
+    return x, a, b, k
+g(1,2,3,c=99) #(1, (2,3), 23, {'c': 99})
+```
+
 ## Docstrings
 
 用來描述函式\(類別、模組\)
