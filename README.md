@@ -1,6 +1,20 @@
 # Python技術手冊筆記
 
-## 嗨
+##  ​資料型別
+
+Pyhon中的物件可分為可變物件\(mutable object\)及不可變物件\(immutable object\)
+
+#### 數字
+
+    二進位表示法 0b01, 0b110010
+
+    八進位表示法0o1, 0o27
+
+    十六進位表示法0x1, 0xDA5
+
+#### tuple
+
+
 
 ## Docstrings
 
