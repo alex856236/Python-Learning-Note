@@ -272,7 +272,23 @@ def g(x, *a, b=23, **k): #b為僅限關鍵字
 g(1,2,3,c=99) #(1, (2,3), 23, {'c': 99})
 ```
 
-## Docstrings
+### 參數傳遞
+
+* \*args: 將序列項目逐一傳入
+* \*\*kwds: 將字典,以指定名稱方式逐一傳入
+* \*kwds: 將字典的key逐一傳入
+* \*kwds.values\(\):將字典的value逐一傳入
+
+```text
+tp = [1,2,3,]
+d = {'x':1, 'y':1, 'z':1}
+sum_args(*tp)
+#等同於sum_args(tp[0],tp[1],tp[2])
+showkey(**d)
+#等同於sum_args(x=d['x'], y=d['y'], z=d['z'])
+```
+
+### Docstrings
 
 用來描述函式\(類別、模組\)
 
@@ -281,6 +297,106 @@ g(1,2,3,c=99) #(1, (2,3), 23, {'c': 99})
 * 第一行: 簡要說明函式\(類別、模組\)用途
 * 第二行: 空白行
 * 其餘行: 描述函式\(類別、模組\)參數、先決條件、回傳值以及副作用，以空白行隔開
+
+### 函式注釋與型別提示
+
+* 在參數後面加入 :type 添加型別提示
+* 再函式參數與 : 之間加入-&gt;type添加函式回傳值提示
+* 函式物件的\_\_annotations\_\_屬性會將每個提示以dict方式儲存
+
+```text
+def returnStr(string:str) -> str:
+	return string
+
+print(returnStr('Hi')
+print(returnStr(12)) #不強制使用行別提示的型別
+print(returnStr.__annotations__)
+#{'string': <class 'str'>, 'return': <class 'str'>}
+```
+
+### 巢狀函式
+
+```text
+def percent1(a, b, c):
+	def pc(target, total=a+b+c):
+		return (target*100.0)/ total
+	print(pc(a), pc(b), pc(c))
+
+def percent2(a, b, c):
+	def pc(target):
+		return (target*100.0)/ (a+b+c)
+	print(pc(a), pc(b), pc(c))
+#percent1 與 percent2 的差別在於percent只會計算一次a+b+c
+#但還是要依情況使用
+```
+
+### 閉包\(closure\)
+
+* 當希望某些參數在建構時就固定下來時，除了物件導向，也可以使用closure的方式，將資料與方法包在一起。
+
+```text
+def make_adder(augend):
+	def add(addend):
+		return addend+augend
+	return add
+
+adder = make_adder(7)
+print(adder(3)) #10
+```
+
+### 用closure做一個計數器
+
+```text
+def make_counter():
+	count = 0
+	def counter():
+		nonlocal count #nonlocal類似global, 但範圍只到所有外層函式
+		count+=1
+		return count
+	return counter
+
+c1 = make_counter() #各自獨立的counter
+c2 = make_counter() #各自獨立的counter
+print(c1(), c1(), c1())
+print(c2())
+print(c1(),c2())
+```
+
+### lambda
+
+* lambda函式是主體為單一return述句的匿名函式
+* 語法: lambda target: return value
+
+```text
+ls = [1,2,3,4,5]
+low = 2
+result = [r for r in filter(lambda x: low<x, ls)]
+print(result)
+```
+
+* 等同於
+
+```text
+ls = [1,2,3,4,5]
+low = 2
+def bound(x, low=low):
+	return low<x
+result = [x for x in filter(bound, ls)]
+print(result)
+```
+
+### 產生器 generator
+
+* 當一個函式主體裡面出現關鍵字yield一次或多次，那函式就是一個產生器
+* 太多了不想打，直接看圖
+
+![](.gitbook/assets/s__11059225.jpg)
+
+![](.gitbook/assets/s__11059226.jpg)
+
+![](.gitbook/assets/s__11059227.jpg)
+
+![](.gitbook/assets/s__11059228.jpg)
 
 ## 
 
