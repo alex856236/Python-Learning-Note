@@ -526,14 +526,14 @@ leave C
 *  如果你認為 `super` 代表『調用父類別的方法』，那你很可能會疑惑為什麼 enter A 的下一句不是 enter Base 而是 enter B。原因是，**`super` 和父類沒有實質性的關聯，**而是根據**MRO**運作的。
 * 事實上，對於定義的每一个類，Python 會計算出一个**方法解析順序（Method Resolution Order, MRO）列表**，**它代表了類繼承的順序**，我們可以使用下面的方式獲得某個類的 MRO 列表：
 
-```text
+```python
 >>> C.mro()   # or C.__mro__ or C().__class__.mro()
 [__main__.C, __main__.A, __main__.B, __main__.Base, object]
 ```
 
 ### sup工作原理
 
-```text
+```python
 def super(cls, inst):
     mro = inst.__class__.mro()
     return mro[mro.index(cls) + 1]
@@ -550,19 +550,19 @@ def super(cls, inst):
 
 首先看類 C 的 `__init__` 方法：
 
-```text
+```python
 super(C, self).__init__()
 ```
 
  這裡的 self 是當前 C 的實例，self.**class**.mro\(\) 结果是：
 
-```text
+```python
 [__main__.C, __main__.A, __main__.B, __main__.Base, object]
 ```
 
  可以看到，C 的下一個類是 A，于是，跳到了 A 的 `__init__`，這時會打印出 enter A，並執行下面一行程式：
 
-```text
+```python
 super(A, self).__init__()
 ```
 
