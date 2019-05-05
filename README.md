@@ -398,5 +398,80 @@ print(result)
 
 ![](.gitbook/assets/s__11059228.jpg)
 
-## 
+## Chapter 3 Python物件導向
+
+### 定義類別
+
+```text
+class classname(base-class1,base-class2,...):
+    statement..
+```
+
+* classname: 類別名稱
+* base-class: 父類別,可以零到多個
+* base-class可以是一個具名參數metaclass=..., 代別元類別
+* 每個class都是object的子類別，class C1\(\) = class C1\(object\)
+
+### 類別隱含屬性
+
+* \_\_name\_\_: class名稱
+* \_\_bases\_\_: class所有父類別的名稱\(tuple\)
+* \_\_dict\_\_私有屬性是用來儲存
+
+```text
+class C1():
+	x = 10
+	def get_x(self):
+		return x
+
+class C2(C1):
+	x = 20
+
+print(C2.__name__)
+print(C2.__bases__)
+print(C2.__dict__)
+```
+
+### 私有變數
+
+* 在變數名稱前加上兩個底線\_\_value就是私有變數，避免子類別的屬性命名衝突，或是直接存取屬性
+
+### 描述器
+
+```text
+class Integer(object):
+	"""
+	descriptor描述器
+	如果類別裡面包含了 __set__、__get__、__delete__其中一(多)種methods，那就是一个描述器
+	通常用於對類別的操作進行hook(掛勾)
+	描述器不會單獨存在，通常會附加於其他類別之中
+	"""
+	def __init__(self, name):
+		self.name = name
+
+	def __set__(self, instance, value):#修改屬性時，先進行一些操作
+		if not isinstance(value, int):
+			raise TypeError('Expected an int')
+		instance.__dict__[self.name] = value
+ 
+class Point(object):
+	x = Integer('x')
+	y = Integer('y')
+	def __init__(self, x, y):
+		self.x = x
+		self.y = y
+
+p = Point(2, 3)
+p.x = 9
+p.y = 9.9#這句會拋出TypeError: Expected an int錯誤.這就是描述器的作用
+# p.x = 9 等同於p.__dict__['x'] = 9
+```
+
+
+
+
+
+
+
+
 
