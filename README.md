@@ -568,5 +568,132 @@ super(A, self).__init__()
 
  注意，這裡的 self 也是當前 C 的實例，MRO 列表跟上面是一樣的，搜索 A 在 MRO 中的下一個類，這時發現是 B，于是，跳到了 B 的 `__init__`，這時會打印出 enter B，而不是 enter Base。
 
+## 裝飾器  **decorator**
 
+```python
+def hello():
+    return 'hello world'
+```
+
+ 我們想增強 `hello()` 函數的功能，希望给返回加上 HTML 標籤，比如 `<i>hello world</i>`，但是有一個要求，不改變原来 `hello()` 函數的定義。那麼可以使用裝飾器的方式實現:
+
+```python
+def makeitalic(func):
+    def wrapped():
+        return "<i>" + func() + "</i>"
+    return wrapped
+```
+
+ 現在，我們就可以不改變 `hello()` 函數的定義，給返回加上 HTML 標籤:
+
+```python
+>>> hello = makeitalic(hello)  # 將 hello 函數傳給 makeitalic
+>>> hello()
+'<i>hello world</i>'
+```
+
+### 裝飾器的使用形式
+
+```python
+@decorator
+def func():
+    pass
+```
+
+等同下面的形式：
+
+```python
+def func():
+    pass
+func = decorator(func)
+```
+
+裝飾器可以定義多個，離函數定義最近的裝飾器先被調用，比如：
+
+```python
+@decorator_one
+@decorator_two
+def func():
+    pass
+```
+
+等同於下面的形式：
+
+```python
+def func():
+    pass
+func = decorator_one(decorator_two(func))
+```
+
+## 抽象類別
+
+* @abstractmethod
+* abc模組
+* collections.abc模組
+
+## 元類別 Metaclasses
+
+* 在Python中，類別也是一個物件
+* 類別創建實例，元類別創建類別，元類別預設是type
+* 元類別主要做了三件事：
+  * 攔截類別的創建
+  * 修改類別的定義
+  * 回傳修改後的類別
+
+從一個簡單的例子開始，假設有下面的類別：
+
+```python
+class Foo(object):
+    name = 'foo'
+    def bar(self):
+        print 'bar'
+```
+
+* 現在我們想给這個類別的方法和屬性名稱前面加上 `my_` 前綴，即 name 變成 my\_name，bar 變成 my\_bar，另外，我們還想加一個 echo 方法。當然，有很多種做法，這裡展示用元類別的做法。
+
+```python
+class PrefixMetaclass(type):
+    def __new__(cls, name, bases, attrs):
+        # 給所有屬性和方法前面加上前綴 my_
+        _attrs = (('my_' + name, value) for name, value in attrs.items())  
+
+        _attrs = dict((name, value) for name, value in _attrs)  # 轉化為字典
+        _attrs['echo'] = lambda self, phrase: phrase  # 增加了一個 echo 方法
+
+        return type.__new__(cls, name, bases, _attrs)  # 返回創建後的類別
+```
+
+ `__new__` 是在 `__init__` 之前被調用的特殊方法，它用来創建對象並返回創建後的對象，對它的參數解釋如下：
+
+* cls：當前準備創建的類別
+* name：類別的名字
+* bases：類別的父類別集合
+* attrs：類別的屬性和方法，是一個字典
+
+```python
+class Foo(metaclass=PrefixMetaclass):
+    name = 'foo'
+    def bar(self):
+        print 'bar'
+```
+
+```python
+>>> f = Foo()
+>>> f.name    # name 屬性已經改變
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-774-4511c8475833> in <module>()
+----> 1 f.name
+
+AttributeError: 'Foo' object has no attribute 'name'
+>>>
+>>> f.my_name
+'foo'
+>>> f.my_bar()
+bar
+>>> f.echo('hello')
+'hello'
+```
+
+可以看到，Foo 原来的屬性 name 已經變成了 my\_name，而方法 bar 也變成了 my\_bar。
 
